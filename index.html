@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>صفية & عبدالله | دعوة خطوبة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Tajawal:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f6efe2;
+    --cream-2:#efe4d0;
+    --paper:#fbf6ea;
+    --earth-1:#c9a876;
+    --earth-2:#a9835a;
+    --brown-deep:#4a3324;
+    --brown-text:#5c4530;
+    --gold:#b8935a;
+    --burgundy:#8a2b2b;
+    --kraft-back:#825f41;
+    --kraft-front:#aa8565;
+    --kraft-flap:#9d7857;
+    --shadow-soft: 0 10px 30px rgba(74,51,36,0.18);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--cream);
+    color:var(--brown-text);
+    font-family:'Tajawal', sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(169,131,90,0.05) 0%, transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(138,43,43,0.04) 0%, transparent 45%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  h1,h2,h3{font-family:'El Messiri', serif; color:var(--brown-deep); font-weight:700;}
+
+  .eng{font-family:'Playfair Display', serif;}
+
+  img{max-width:100%; display:block;}
+
+  .section{
+    position:relative;
+    z-index:1;
+    padding:90px 6vw;
+  }
+
+  .section-inner{max-width:1100px; margin:0 auto;}
+
+  .reveal{
+    opacity:0;
+    transform:translateY(28px);
+    transition:opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.is-visible{opacity:1; transform:translateY(0);}
+
+  /* ============ INTRO OVERLAY ============ */
+  #intro-overlay{
+    position:fixed; inset:0; z-index:9999;
+    display:flex; align-items:center; justify-content:center;
+    background:
+      radial-gradient(circle at 50% 40%, #efe2c9 0%, #e3d3ac 60%, #d6c294 100%);
+    background-blend-mode:multiply;
+    background-color:#e6d5ae;
+    overflow:hidden;
+    transition:opacity 1.4s ease;
+  }
+  #intro-overlay::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(90,60,30,0.03) 0px, transparent 2px, transparent 4px),
+      repeating-linear-gradient(90deg, rgba(90,60,30,0.02) 0px, transparent 3px, transparent 6px);
+    pointer-events:none;
+  }
+  #intro-overlay.fade-out{opacity:0; pointer-events:none;}
+
+  .intro-hint{
+    position:absolute;
+    bottom:8%;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'El Messiri', serif;
+    color:var(--brown-deep);
+    font-size:0.95rem;
+    letter-spacing:1px;
+    opacity:0.75;
+    animation:hintPulse 2.4s ease-in-out infinite;
+    transition:opacity 0.4s ease;
+  }
+  @keyframes hintPulse{
+    0%,100%{opacity:0.45;}
+    50%{opacity:0.9;}
+  }
+
+  .envelope-scene{
+    position:relative;
+    width:320px;
+    height:220px;
+    perspective:1400px;
+  }
+
+  .envelope{
+    position:relative;
+    width:100%;
+    height:100%;
+    cursor:pointer;
+    transition:transform 0.6s ease;
+  }
+
+  /* Layer 1: Back panel */
+  .env-back{
+    position:absolute; inset:0;
+    background:var(--kraft-back);
+    border-radius:6px;
+    box-shadow:var(--shadow-soft);
+    z-index:2;
+  }
+
+  /* Layer 2: Card (starts hidden inside envelope, behind the back panel) */
+  .env-card{
+    position:absolute;
+    left:8%;
+    right:8%;
+    bottom:6%;
+    width:84%;
+    height:190px;
+    background:var(--paper);
+    border:1px solid #e6d9bd;
+    border-radius:4px;
+    box-shadow:0 4px 18px rgba(74,51,36,0.25);
+    z-index:0;
+    transform:translateY(0) scale(1);
+    transform-origin:center;
+    transition:transform 1.6s cubic-bezier(.4,0,.2,1);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    padding:14px;
+  }
+
+  .env-card svg{width:100%; height:100%;}
+
+  /* Layer 3: Front pocket (clip-path triangle-ish shape) */
+  .env-front{
+    position:absolute; inset:0;
+    background:var(--kraft-front);
+    z-index:3;
+    clip-path:polygon(0% 100%, 50% 42%, 100% 100%);
+    box-shadow:inset 0 -6px 14px rgba(0,0,0,0.12);
+  }
+
+  /* Layer 4: Flap */
+  .env-flap{
+    position:absolute;
+    top:0; left:0; right:0;
+    height:52%;
+    background:var(--kraft-flap);
+    clip-path:polygon(0% 0%, 100% 0%, 50% 100%);
+    z-index:4;
+    transform-origin:top center;
+    transform-style:preserve-3d;
+    transition:transform 1.1s cubic-bezier(.45,.05,.55,.95);
+    box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  }
+
+  .env-flap.open{
+    transform:rotateX(180deg);
+    z-index:1;
+  }
+
+  .wax-seal{
+    position:absolute;
+    left:50%; top:38%;
+    transform:translate(-50%,-50%);
+    width:64px; height:64px;
+    z-index:5;
+    filter:drop-shadow(0 3px 4px rgba(0,0,0,0.35));
+    transition:opacity 0.5s ease, transform 0.5s ease;
+  }
+  .wax-seal.hide{opacity:0; transform:translate(-50%,-50%) scale(0.6);}
+
+  .envelope-scene.opened .env-flap{ pointer-events:none; }
+
+  .envelope-scene.card-out .env-card{
+    transform:translateY(-160px);
+  }
+  .envelope-scene.card-scale .env-card{
+    transform:translateY(-160px) scale(2.1);
+    z-index:20;
+  }
+
+  /* ============ HERO ============ */
+  #hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:linear-gradient(180deg, var(--cream) 0%, var(--cream-2) 100%);
+  }
+  .hero-eng{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:clamp(1rem, 2vw, 1.4rem);
+    color:var(--gold);
+    letter-spacing:2px;
+    margin-bottom:18px;
+  }
+  .hero-names{
+    font-size:clamp(2.4rem, 7vw, 4.8rem);
+    line-height:1.15;
+    margin-bottom:10px;
+  }
+  .hero-names .amp{color:var(--burgundy); padding:0 12px;}
+  .hero-date{
+    font-family:'El Messiri', serif;
+    font-size:clamp(1.1rem, 2.4vw, 1.6rem);
+    color:var(--earth-2);
+    letter-spacing:3px;
+    margin-bottom:38px;
+  }
+  .hero-images{
+    display:flex;
+    gap:26px;
+    margin-bottom:44px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .hero-img-frame{
+    width:220px; height:280px;
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:var(--shadow-soft);
+    background:var(--cream-2);
+    position:relative;
+    transform:rotate(-3deg);
+  }
+  .hero-img-frame:nth-child(2){transform:rotate(3deg); margin-top:24px;}
+  .hero-img-frame img{width:100%; height:100%; object-fit:cover;}
+  .img-fallback{
+    width:100%; height:100%;
+    display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(135deg, var(--cream-2), var(--cream-2) 10px, #e6d5b3 10px, #e6d5b3 20px);
+    color:var(--earth-2);
+    font-family:'El Messiri', serif;
+    font-size:0.85rem;
+    text-align:center;
+    padding:10px;
+  }
+
+  .btn-savedate{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:1.05rem;
+    letter-spacing:1px;
+    background:transparent;
+    color:var(--brown-deep);
+    border:1.5px solid var(--gold);
+    padding:14px 40px;
+    border-radius:40px;
+    cursor:pointer;
+    transition:all 0.35s ease;
+  }
+  .btn-savedate:hover{
+    background:var(--gold);
+    color:var(--paper);
+    box-shadow:0 8px 20px rgba(184,147,90,0.35);
+  }
+
+  /* ============ EVENT DETAILS ============ */
+  #details{
+    background:var(--paper);
+    text-align:center;
+  }
+  .details-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:30px;
+    margin:44px 0 34px;
+  }
+  .detail-card{
+    background:var(--cream);
+    border:1px solid #e6d9bd;
+    border-radius:10px;
+    padding:34px 20px;
+  }
+  .detail-card .label{
+    font-family:'El Messiri', serif;
+    color:var(--gold);
+    font-size:0.85rem;
+    letter-spacing:2px;
+    margin-bottom:10px;
+  }
+  .detail-card .value{
+    font-size:1.3rem;
+    color:var(--brown-deep);
+    font-weight:700;
+  }
+  .moon-line{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:1.3rem;
+    color:var(--earth-2);
+    margin-top:20px;
+  }
+
+  /* ============ CLOTHESLINE GALLERY ============ */
+  #journey{
+    background:var(--cream);
+    text-align:center;
+    overflow:hidden;
+  }
+  #journey h2{
+    font-size:clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom:56px;
+  }
+  .clothesline-row{
+    position:relative;
+    height:230px;
+    margin-bottom:20px;
+  }
+  .clothesline-row svg.line{
+    position:absolute;
+    top:14px; left:0;
+    width:100%; height:40px;
+  }
+  .pegs{
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+    padding-top:20px;
+  }
+  .stage-arrow{
+    width:22px; height:22px;
+    flex:none;
+    opacity:0.85;
+  }
+  .stage-connector{
+    display:flex;
+    justify-content:center;
+    margin:-10px 0 6px;
+  }
+  .peg-photo{
+    width:120px;
+    height:150px;
+    background:var(--paper);
+    padding:8px 8px 20px;
+    border-radius:2px;
+    box-shadow:0 8px 18px rgba(74,51,36,0.2);
+    position:relative;
+    transform-origin:top center;
+    animation:sway 4.5s ease-in-out infinite;
+  }
+  .peg-photo img{width:100%; height:100%; object-fit:cover;}
+  .peg-photo .clip{
+    position:absolute;
+    top:-10px; left:50%;
+    transform:translateX(-50%);
+    width:16px; height:22px;
+    background:var(--gold);
+    border-radius:3px;
+    box-shadow:0 2px 3px rgba(0,0,0,0.3);
+  }
+  @keyframes sway{
+    0%,100%{transform:rotate(-2.5deg);}
+    50%{transform:rotate(2.5deg);}
+  }
+
+  /* ============ COUNTDOWN ============ */
+  #countdown{
+    background:var(--cream-2);
+    text-align:center;
+  }
+  #countdown h2.eng{
+    font-size:clamp(1.3rem, 3vw, 1.9rem);
+    margin-bottom:40px;
+    color:var(--brown-deep);
+  }
+  .countdown-grid{
+    display:flex;
+    justify-content:center;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .cd-unit{
+    background:var(--paper);
+    border-radius:12px;
+    padding:24px 26px;
+    min-width:110px;
+    box-shadow:var(--shadow-soft);
+    border:1px solid #e6d9bd;
+  }
+  .cd-num{
+    font-family:'El Messiri', serif;
+    font-size:2.4rem;
+    color:var(--burgundy);
+    font-weight:700;
+  }
+  .cd-label{
+    font-size:0.95rem;
+    color:var(--earth-2);
+    margin-top:6px;
+    letter-spacing:1px;
+  }
+
+  /* ============ GUESTBOOK ============ */
+  #guestbook{
+    background:var(--paper);
+    text-align:center;
+  }
+  #guestbook h2{margin-bottom:44px;}
+  .mini-envelopes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:26px;
+    justify-content:center;
+    margin-bottom:60px;
+  }
+  .mini-env{
+    width:90px; height:64px;
+    position:relative;
+    cursor:pointer;
+    transition:transform 0.3s ease;
+  }
+  .mini-env:hover{transform:translateY(-4px);}
+  .mini-env .m-back{
+    position:absolute; inset:0;
+    background:var(--kraft-back);
+    border-radius:4px;
+  }
+  .mini-env .m-front{
+    position:absolute; inset:0;
+    background:var(--kraft-front);
+    clip-path:polygon(0% 100%, 50% 40%, 100% 100%);
+  }
+  .mini-env .m-flap{
+    position:absolute; top:0; left:0; right:0; height:55%;
+    background:var(--kraft-flap);
+    clip-path:polygon(0% 0%, 100% 0%, 50% 100%);
+  }
+  .mini-env .m-seal{
+    position:absolute;
+    left:50%; top:36%;
+    transform:translate(-50%,-50%);
+    width:24px; height:24px;
+  }
+
+  .guest-form{
+    max-width:480px;
+    margin:0 auto;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+    background:var(--cream);
+    padding:36px;
+    border-radius:14px;
+    border:1px solid #e6d9bd;
+    box-shadow:var(--shadow-soft);
+  }
+  .guest-form input, .guest-form textarea{
+    font-family:'Tajawal', sans-serif;
+    padding:14px 16px;
+    border-radius:8px;
+    border:1px solid #d9c9a3;
+    background:var(--paper);
+    font-size:1rem;
+    color:var(--brown-text);
+    resize:vertical;
+  }
+  .guest-form textarea{min-height:100px;}
+  .guest-form button{
+    font-family:'El Messiri', serif;
+    font-size:1rem;
+    background:var(--burgundy);
+    color:var(--paper);
+    border:none;
+    padding:14px;
+    border-radius:8px;
+    cursor:pointer;
+    letter-spacing:1px;
+    transition:background 0.3s ease;
+  }
+  .guest-form button:hover{background:#71201f;}
+
+  /* Guestbook modal */
+  #guest-modal{
+    position:fixed; inset:0;
+    background:rgba(74,51,36,0.55);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:5000;
+    padding:20px;
+  }
+  #guest-modal.open{display:flex;}
+  .modal-paper{
+    background:var(--paper);
+    max-width:480px;
+    width:100%;
+    padding:44px 34px;
+    border-radius:8px;
+    position:relative;
+    box-shadow:0 20px 60px rgba(0,0,0,0.4);
+    text-align:center;
+    opacity:0;
+    transform:scale(0.9);
+    animation:modalIn 0.4s ease forwards;
+  }
+  @keyframes modalIn{ to{opacity:1; transform:scale(1);} }
+  .modal-paper .modal-name{
+    font-family:'El Messiri', serif;
+    color:var(--burgundy);
+    font-size:1.3rem;
+    margin-bottom:16px;
+  }
+  .modal-paper .modal-msg{
+    font-size:1.05rem;
+    line-height:1.9;
+    color:var(--brown-text);
+  }
+  .modal-close{
+    position:absolute;
+    top:12px; left:16px;
+    background:none;
+    border:none;
+    font-size:1.4rem;
+    color:var(--earth-2);
+    cursor:pointer;
+  }
+
+  /* ============ FINALE ============ */
+  #finale{
+    background:var(--brown-deep);
+    color:var(--cream);
+    text-align:center;
+    padding-bottom:70px;
+  }
+  #finale h2{color:var(--cream);}
+  .finale-images{
+    display:flex;
+    gap:24px;
+    justify-content:center;
+    margin:20px 0 50px;
+    flex-wrap:wrap;
+  }
+  .finale-img-frame{
+    width:200px; height:250px;
+    border-radius:6px;
+    overflow:hidden;
+    box-shadow:0 12px 30px rgba(0,0,0,0.4);
+  }
+  .finale-img-frame img{width:100%; height:100%; object-fit:cover;}
+  .finale-arabic{
+    font-family:'El Messiri', serif;
+    font-size:clamp(1.5rem, 4vw, 2.3rem);
+    margin-bottom:14px;
+    color:var(--earth-1);
+  }
+  .finale-eng{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:1.15rem;
+    color:var(--cream);
+    opacity:0.85;
+  }
+
+  @media (max-width:720px){
+    .details-grid{grid-template-columns:1fr;}
+    .pegs{flex-wrap:wrap; gap:14px;}
+    .clothesline-row{height:auto;}
+    .clothesline-row svg.line{display:none;}
+    .hero-img-frame{width:150px; height:200px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<audio id="bgMusic" src="music.mp3" loop preload="auto"></audio>
+
+<!-- ============ INTRO OVERLAY ============ -->
+<div id="intro-overlay">
+  <div class="envelope-scene" id="envelopeScene">
+    <div class="envelope" id="envelopeClick">
+      <div class="env-back"></div>
+      <div class="env-card" id="envCard">
+        <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <g id="lil-flower">
+              <ellipse cx="0" cy="-7" rx="4.4" ry="6" fill="#c98a86"/>
+              <ellipse cx="0" cy="-7" rx="4.4" ry="6" fill="#c98a86" transform="rotate(72)"/>
+              <ellipse cx="0" cy="-7" rx="4.4" ry="6" fill="#c98a86" transform="rotate(144)"/>
+              <ellipse cx="0" cy="-7" rx="4.4" ry="6" fill="#c98a86" transform="rotate(216)"/>
+              <ellipse cx="0" cy="-7" rx="4.4" ry="6" fill="#c98a86" transform="rotate(288)"/>
+              <circle cx="0" cy="0" r="3.4" fill="#e0aa53"/>
+            </g>
+          </defs>
+
+          <!-- left floral spray -->
+          <path d="M42 88 Q50 66 46 46" fill="none" stroke="#8a9a6b" stroke-width="1.6"/>
+          <path d="M46 62 Q36 58 32 50" fill="none" stroke="#8a9a6b" stroke-width="1.4"/>
+          <path d="M45 74 Q56 70 60 62" fill="none" stroke="#8a9a6b" stroke-width="1.4"/>
+          <use href="#lil-flower" x="46" y="46"/>
+          <use href="#lil-flower" x="32" y="48" transform="scale(0.7)" style="transform-origin:32px 48px;"/>
+          <use href="#lil-flower" x="60" y="60" transform="scale(0.75)" style="transform-origin:60px 60px;"/>
+
+          <!-- right floral spray (mirrored) -->
+          <path d="M158 88 Q150 66 154 46" fill="none" stroke="#8a9a6b" stroke-width="1.6"/>
+          <path d="M154 62 Q164 58 168 50" fill="none" stroke="#8a9a6b" stroke-width="1.4"/>
+          <path d="M155 74 Q144 70 140 62" fill="none" stroke="#8a9a6b" stroke-width="1.4"/>
+          <use href="#lil-flower" x="154" y="46"/>
+          <use href="#lil-flower" x="168" y="48" transform="scale(0.7)" style="transform-origin:168px 48px;"/>
+          <use href="#lil-flower" x="140" y="60" transform="scale(0.75)" style="transform-origin:140px 60px;"/>
+
+          <text x="100" y="98" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-size="14" fill="#4a3324">..You are invited</text>
+        </svg>
+      </div>
+      <div class="env-front"></div>
+      <div class="env-flap" id="envFlap">
+        <svg class="wax-seal" id="waxSeal" viewBox="0 0 100 100">
+          <path d="M50 90 C50 90 8 62 8 34 C8 15 24 4 40 8 C46 10 50 16 50 24 C50 16 54 10 60 8 C76 4 92 15 92 34 C92 62 50 90 50 90 Z" fill="#6f1f1f" transform="translate(2,3)"/>
+          <path d="M50 90 C50 90 8 62 8 34 C8 15 24 4 40 8 C46 10 50 16 50 24 C50 16 54 10 60 8 C76 4 92 15 92 34 C92 62 50 90 50 90 Z" fill="#8a2b2b"/>
+          <text x="50" y="42" text-anchor="middle" font-family="El Messiri, serif" font-size="15" fill="#e9c98f">S &amp; A</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="intro-hint" id="introHint">اضغطي على الختم لفتح الدعوة</div>
+</div>
+
+<!-- ============ HERO ============ -->
+<section id="hero">
+  <div class="hero-eng eng">We are getting engaged</div>
+  <h1 class="hero-names">صفية <span class="amp">&amp;</span> عبدالله</h1>
+  <div class="hero-date">19 / 7 / 2026</div>
+  <div class="hero-images reveal">
+    <div class="hero-img-frame">
+      <img src="image1.jpg" alt="صفية وعبدالله" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'image1.jpg'}))">
+    </div>
+    <div class="hero-img-frame">
+      <img src="image2.jpg" alt="صفية وعبدالله" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'image2.jpg'}))">
+    </div>
+  </div>
+  <button class="btn-savedate eng" onclick="document.getElementById('details').scrollIntoView()">Save the Date</button>
+</section>
+
+<!-- ============ EVENT DETAILS ============ -->
+<section id="details" class="section">
+  <div class="section-inner reveal">
+    <h2>تفاصيل الحفل</h2>
+    <div class="details-grid">
+      <div class="detail-card">
+        <div class="label">المكان</div>
+        <div class="value">بيت العروسة</div>
+      </div>
+      <div class="detail-card">
+        <div class="label">التاريخ</div>
+        <div class="value">الحد 19 يوليو 2026</div>
+      </div>
+      <div class="detail-card">
+        <div class="label">الوقت</div>
+        <div class="value">9:00 PM</div>
+      </div>
+    </div>
+    <div class="moon-line eng">Under one very full moon.</div>
+  </div>
+</section>
+
+<!-- ============ SAFIA'S JOURNEY (CLOTHESLINE) ============ -->
+<section id="journey" class="section">
+  <div class="section-inner reveal">
+    <h2>من اجمل كتكوتة لأرق عروسة</h2>
+
+    <div class="clothesline-row">
+      <svg class="line" viewBox="0 0 1000 40" preserveAspectRatio="none">
+        <path d="M0 10 Q 500 40 1000 10" stroke="#a9835a" stroke-width="2" fill="none"/>
+      </svg>
+      <div class="pegs">
+        <div class="peg-photo" style="animation-delay:0.2s;"><span class="clip"></span><img src="safia1.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia1.jpg',style:'width:100%;height:100%'}))"></div>
+        <svg class="stage-arrow" viewBox="0 0 24 24"><path d="M16 5 L8 12 L16 19" stroke="#b8935a" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="peg-photo" style="animation-delay:1.1s;"><span class="clip"></span><img src="safia2.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia2.jpg',style:'width:100%;height:100%'}))"></div>
+        <svg class="stage-arrow" viewBox="0 0 24 24"><path d="M16 5 L8 12 L16 19" stroke="#b8935a" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="peg-photo" style="animation-delay:0.6s;"><span class="clip"></span><img src="safia3.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia3.jpg',style:'width:100%;height:100%'}))"></div>
+        <svg class="stage-arrow" viewBox="0 0 24 24"><path d="M16 5 L8 12 L16 19" stroke="#b8935a" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="peg-photo" style="animation-delay:1.7s;"><span class="clip"></span><img src="safia4.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia4.jpg',style:'width:100%;height:100%'}))"></div>
+      </div>
+    </div>
+
+    <div class="stage-connector">
+      <svg viewBox="0 0 120 60" width="90" height="45">
+        <path d="M20 6 C20 40 80 24 100 50" fill="none" stroke="#b8935a" stroke-width="2.4" stroke-linecap="round"/>
+        <path d="M92 42 L100 50 L89 51" fill="none" stroke="#b8935a" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="clothesline-row">
+      <svg class="line" viewBox="0 0 1000 40" preserveAspectRatio="none">
+        <path d="M0 12 Q 500 -14 1000 12" stroke="#a9835a" stroke-width="2" fill="none"/>
+      </svg>
+      <div class="pegs">
+        <div class="peg-photo" style="animation-delay:0.9s;"><span class="clip"></span><img src="safia5.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia5.jpg',style:'width:100%;height:100%'}))"></div>
+        <svg class="stage-arrow" viewBox="0 0 24 24"><path d="M16 5 L8 12 L16 19" stroke="#b8935a" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="peg-photo" style="animation-delay:0.3s;"><span class="clip"></span><img src="safia6.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia6.jpg',style:'width:100%;height:100%'}))"></div>
+        <svg class="stage-arrow" viewBox="0 0 24 24"><path d="M16 5 L8 12 L16 19" stroke="#b8935a" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="peg-photo" style="animation-delay:1.4s;"><span class="clip"></span><img src="safia7.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia7.jpg',style:'width:100%;height:100%'}))"></div>
+        <svg class="stage-arrow" viewBox="0 0 24 24"><path d="M16 5 L8 12 L16 19" stroke="#b8935a" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="peg-photo" style="animation-delay:0.5s;"><span class="clip"></span><img src="safia8.jpg" alt="صفيه" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia8.jpg',style:'width:100%;height:100%'}))"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COUNTDOWN ============ -->
+<section id="countdown" class="section">
+  <div class="section-inner reveal">
+    <h2 class="eng">safsaf will be a beautiful bride in :</h2>
+    <div class="countdown-grid">
+      <div class="cd-unit"><div class="cd-num" id="cd-days">00</div><div class="cd-label">أيام</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-hours">00</div><div class="cd-label">ساعات</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-mins">00</div><div class="cd-label">دقائق</div></div>
+      <div class="cd-unit"><div class="cd-num" id="cd-secs">00</div><div class="cd-label">ثواني</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ============ FINALE ============ -->
+<section id="finale" class="section">
+  <div class="section-inner reveal">
+    <div class="finale-images">
+      <div class="finale-img-frame">
+        <img src="safia_final1.jpg" alt="صفية" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia_final1.jpg',style:'width:100%;height:100%'}))">
+      </div>
+      <div class="finale-img-frame">
+        <img src="safia_final2.jpg" alt="صفية" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'img-fallback',innerText:'safia_final2.jpg',style:'width:100%;height:100%'}))">
+      </div>
+    </div>
+    <div class="finale-arabic">قدر ولطف قلب البيدو اتخطف ❤️</div>
+    <div class="finale-eng eng">❤️... happy safsaf , happy world️</div>
+  </div>
+</section>
+
+<script>
+  // ---------- INTRO SEQUENCE ----------
+  (function(){
+    const scene = document.getElementById('envelopeScene');
+    const flap = document.getElementById('envFlap');
+    const seal = document.getElementById('waxSeal');
+    const overlay = document.getElementById('intro-overlay');
+    const hint = document.getElementById('introHint');
+    const music = document.getElementById('bgMusic');
+    const clickTarget = document.getElementById('envelopeClick');
+    let opened = false;
+
+    clickTarget.addEventListener('click', function(){
+      if(opened) return;
+      opened = true;
+      hint.style.opacity = '0';
+
+      // a) audio
+      music.volume = 0.6;
+      music.play().catch(()=>{ /* autoplay may be blocked until interaction; this click counts as one */ });
+
+      // b) seal fades, flap opens
+      seal.classList.add('hide');
+      setTimeout(function(){
+        flap.classList.add('open');
+      }, 350);
+
+      // c) card slides up out of envelope
+      setTimeout(function(){
+        scene.classList.add('card-out');
+      }, 1200);
+
+      // d) scale up to dominate screen
+      setTimeout(function(){
+        scene.classList.add('card-scale');
+      }, 2600);
+
+      // e) fade overlay, reveal site
+      setTimeout(function(){
+        overlay.classList.add('fade-out');
+        document.body.style.overflow = 'auto';
+      }, 4900);
+
+      setTimeout(function(){
+        overlay.style.display = 'none';
+      }, 6400);
+
+    }, {passive:true});
+
+    document.body.style.overflow = 'hidden';
+  })();
+
+  // ---------- SCROLL REVEAL ----------
+  (function(){
+    const items = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.15});
+    items.forEach(el=>io.observe(el));
+  })();
+
+  // ---------- COUNTDOWN ----------
+  (function(){
+    const target = new Date("2026-07-19T21:00:00").getTime();
+    const dEl = document.getElementById('cd-days');
+    const hEl = document.getElementById('cd-hours');
+    const mEl = document.getElementById('cd-mins');
+    const sEl = document.getElementById('cd-secs');
+
+    function pad(n){ return String(n).padStart(2,'0'); }
+
+    function tick(){
+      const now = Date.now();
+      let diff = target - now;
+      if(diff < 0) diff = 0;
+
+      const days = Math.floor(diff / (1000*60*60*24));
+      const hours = Math.floor((diff / (1000*60*60)) % 24);
+      const mins = Math.floor((diff / (1000*60)) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      dEl.textContent = pad(days);
+      hEl.textContent = pad(hours);
+      mEl.textContent = pad(mins);
+      sEl.textContent = pad(secs);
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+
+  // ---------- GUESTBOOK MODAL ----------
+  (function(){
+    const modal = document.getElementById('guest-modal');
+    const modalName = document.getElementById('modalName');
+    const modalMsg = document.getElementById('modalMsg');
+    const modalClose = document.getElementById('modalClose');
+    const list = document.getElementById('miniEnvelopes');
+
+    function openModal(name, msg){
+      modalName.textContent = name;
+      modalMsg.textContent = msg;
+      modal.classList.add('open');
+    }
+
+    list.addEventListener('click', function(e){
+      const env = e.target.closest('.mini-env');
+      if(!env) return;
+      openModal(env.dataset.name, env.dataset.msg);
+    });
+
+    modalClose.addEventListener('click', function(){
+      modal.classList.remove('open');
+    });
+    modal.addEventListener('click', function(e){
+      if(e.target === modal) modal.classList.remove('open');
+    });
+
+    // ---------- GUEST FORM ----------
+    const form = document.getElementById('guestForm');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      const name = document.getElementById('guestName').value.trim();
+      const msg = document.getElementById('guestMsg').value.trim();
+      if(!name || !msg) return;
+
+      const env = document.createElement('div');
+      env.className = 'mini-env';
+      env.dataset.name = name;
+      env.dataset.msg = msg;
+      env.innerHTML =
+        '<div class="m-back"></div><div class="m-front"></div><div class="m-flap"></div>' +
+        '<svg class="m-seal" viewBox="0 0 100 100"><path d="M50 90 C50 90 8 62 8 34 C8 15 24 4 40 8 C46 10 50 16 50 24 C50 16 54 10 60 8 C76 4 92 15 92 34 C92 62 50 90 50 90 Z" fill="#8a2b2b"/></svg>';
+      list.appendChild(env);
+
+      form.reset();
+      openModal(name, msg);
+    });
+  })();
+</script>
+
+</body>
+</html>
